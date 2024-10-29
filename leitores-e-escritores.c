@@ -18,9 +18,8 @@ void *leitor(void *arg) {
         }
         sem_post(&mutex);
 
-        // Simula a leitura do saldo
         printf("Leitor %ld: Consultou o saldo, valor atual: %d reais\n", (long)arg, saldo);
-        sleep(1);  // Pausa para simular a leitura
+        sleep(1);
 
         sem_wait(&mutex);  // Protege o contador de leitores
         read_count--;
@@ -39,7 +38,6 @@ void *escritor(void *arg) {
     for (int i = 0; i < 5; i++) {
         sem_wait(&rw_mutex);  // Escritor bloqueia leitores e outros escritores
 
-        // Simula a modificação do saldo (depósito ou saque)
         if (id % 2 == 0) {  // Escritores com id par depositam
             saldo += 10;
             printf("Escritor %ld: Depositou 10 reais, saldo atual: %d reais\n", id, saldo);
